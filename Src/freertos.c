@@ -26,6 +26,10 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "sensor.h"
+
+extern uint8_t ch1_distance;
+extern uint8_t ch2_distance;
+extern uint8_t ch3_distance;
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -140,8 +144,10 @@ void StartDefaultTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-
-    osDelay(1);
+	HCSR04_read();
+	printf("CH1 Distance: %3dcm\r\n", ch1_distance);
+    HAL_Delay(1000);
+	osDelay(1);
   }
   /* USER CODE END StartDefaultTask */
 }
@@ -159,7 +165,10 @@ void StartTask02(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+	HCSR04_read();
+	printf("CH2 Distance: %3dcm\r\n", ch2_distance);
+	HAL_Delay(1000);
+	osDelay(1);
   }
   /* USER CODE END StartTask02 */
 }
@@ -177,7 +186,10 @@ void StartTask03(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+	HCSR04_read();
+	printf("CH3 Distance: %3dcm\r\n", ch3_distance);
+	HAL_Delay(1000);
+	osDelay(1);
   }
   /* USER CODE END StartTask03 */
 }

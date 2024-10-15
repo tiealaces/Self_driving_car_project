@@ -23,7 +23,6 @@
 #include "usart.h"
 #include "gpio.h"
 
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -70,11 +69,11 @@ PUTCHAR_PROTOTYPE
 
   return ch;
 }
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
 
 
 /* USER CODE END 0 */
@@ -117,7 +116,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_UARTEx_ReceiveToIdle_IT(&huart1, str_peri, sizeof(str_peri));
   HAL_TIM_PWM_Start(&htim10, TIM_CHANNEL_1);
-
+  HCSR04_set();
   /* USER CODE END 2 */
 
   /* Init scheduler */
