@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "dma.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -47,7 +48,10 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+uint32_t echo_left_time, echo_center_time, echo_right_time;
+uint32_t echo_left_rise_time, echo_left_fall_time;
+uint32_t echo_center_rise_time, echo_center_fall_time;
+uint32_t echo_right_rise_time, echo_right_fall_time;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -107,16 +111,21 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_USART1_UART_Init();
   MX_TIM10_Init();
   MX_TIM2_Init();
   MX_TIM11_Init();
   MX_TIM3_Init();
   MX_USART2_UART_Init();
+  MX_TIM4_Init();
+  MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
   HAL_UARTEx_ReceiveToIdle_IT(&huart1, str_peri, sizeof(str_peri));
-  HAL_TIM_PWM_Start(&htim10, TIM_CHANNEL_1);
-  HCSR04_set();
+  HAL_TIM_PWM_Start(&htim10, TIM_CHANNEL_1);	// bluetooth
+
+  echo_set();
+  trigger_set();
   /* USER CODE END 2 */
 
   /* Init scheduler */

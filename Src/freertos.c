@@ -27,9 +27,10 @@
 /* USER CODE BEGIN Includes */
 #include "sensor.h"
 
-extern uint8_t ch1_distance;
-extern uint8_t ch2_distance;
-extern uint8_t ch3_distance;
+extern uint32_t echo_left_time, echo_center_time, echo_right_time;
+extern uint32_t echo_left_rise_time, echo_left_fall_time;
+extern uint32_t echo_center_rise_time, echo_center_fall_time;
+extern uint32_t echo_right_rise_time, echo_right_fall_time;
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -51,10 +52,10 @@ extern uint8_t ch3_distance;
 /* USER CODE BEGIN Variables */
 
 /* USER CODE END Variables */
-/* Definitions for defaultTask */
-osThreadId_t defaultTaskHandle;
-const osThreadAttr_t defaultTask_attributes = {
-  .name = "defaultTask",
+/* Definitions for StartDefaultTas */
+osThreadId_t StartDefaultTasHandle;
+const osThreadAttr_t StartDefaultTas_attributes = {
+  .name = "StartDefaultTas",
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
@@ -78,7 +79,7 @@ const osThreadAttr_t myTask03_attributes = {
 
 /* USER CODE END FunctionPrototypes */
 
-void StartDefaultTask(void *argument);
+void echoreadTask(void *argument);
 void StartTask02(void *argument);
 void StartTask03(void *argument);
 
@@ -111,8 +112,8 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
-  /* creation of defaultTask */
-  defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+  /* creation of StartDefaultTas */
+  StartDefaultTasHandle = osThreadNew(echoreadTask, NULL, &StartDefaultTas_attributes);
 
   /* creation of myTask02 */
   myTask02Handle = osThreadNew(StartTask02, NULL, &myTask02_attributes);
@@ -130,26 +131,23 @@ void MX_FREERTOS_Init(void) {
 
 }
 
-/* USER CODE BEGIN Header_StartDefaultTask */
+/* USER CODE BEGIN Header_echoreadTask */
 /**
-  * @brief  Function implementing the defaultTask thread.
+  * @brief  Function implementing the StartDefaultTas thread.
   * @param  argument: Not used
   * @retval None
   */
-/* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void *argument)
+/* USER CODE END Header_echoreadTask */
+void echoreadTask(void *argument)
 {
-  /* USER CODE BEGIN StartDefaultTask */
-
+  /* USER CODE BEGIN echoreadTask */
   /* Infinite loop */
   for(;;)
   {
-	HCSR04_read();
-	printf("CH1 Distance: %3dcm\r\n", ch1_distance);
-    HAL_Delay(1000);
-	osDelay(1);
+	echo_get();
+    osDelay(1);
   }
-  /* USER CODE END StartDefaultTask */
+  /* USER CODE END echoreadTask */
 }
 
 /* USER CODE BEGIN Header_StartTask02 */
@@ -165,9 +163,7 @@ void StartTask02(void *argument)
   /* Infinite loop */
   for(;;)
   {
-	HCSR04_read();
-	printf("CH2 Distance: %3dcm\r\n", ch2_distance);
-	HAL_Delay(1000);
+
 	osDelay(1);
   }
   /* USER CODE END StartTask02 */
@@ -186,9 +182,7 @@ void StartTask03(void *argument)
   /* Infinite loop */
   for(;;)
   {
-	HCSR04_read();
-	printf("CH3 Distance: %3dcm\r\n", ch3_distance);
-	HAL_Delay(1000);
+
 	osDelay(1);
   }
   /* USER CODE END StartTask03 */
