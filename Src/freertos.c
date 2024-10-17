@@ -25,12 +25,13 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "sensor.h"
+uint8_t autoStart;
 
-extern uint32_t echo_left_time, echo_center_time, echo_right_time;
-extern uint32_t echo_left_rise_time, echo_left_fall_time;
-extern uint32_t echo_center_rise_time, echo_center_fall_time;
-extern uint32_t echo_right_rise_time, echo_right_fall_time;
+//extern uint32_t echo_left_time, echo_center_time, echo_right_time;
+//extern uint32_t echo_left_rise_time, echo_left_fall_time;
+//extern uint32_t echo_center_rise_time, echo_center_fall_time;
+//extern uint32_t echo_right_rise_time, echo_right_fall_time;
+extern uint8_t autoDrive_flag;
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -80,7 +81,7 @@ const osThreadAttr_t myTask03_attributes = {
 /* USER CODE END FunctionPrototypes */
 
 void echoreadTask(void *argument);
-void StartTask02(void *argument);
+void autoDrivingTask(void *argument);
 void StartTask03(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
@@ -116,7 +117,7 @@ void MX_FREERTOS_Init(void) {
   StartDefaultTasHandle = osThreadNew(echoreadTask, NULL, &StartDefaultTas_attributes);
 
   /* creation of myTask02 */
-  myTask02Handle = osThreadNew(StartTask02, NULL, &myTask02_attributes);
+  myTask02Handle = osThreadNew(autoDrivingTask, NULL, &myTask02_attributes);
 
   /* creation of myTask03 */
   myTask03Handle = osThreadNew(StartTask03, NULL, &myTask03_attributes);
@@ -145,28 +146,35 @@ void echoreadTask(void *argument)
   for(;;)
   {
 	echo_get();
-    osDelay(1);
+    osDelay(10);
   }
   /* USER CODE END echoreadTask */
 }
 
-/* USER CODE BEGIN Header_StartTask02 */
+/* USER CODE BEGIN Header_autoDrivingTask */
 /**
 * @brief Function implementing the myTask02 thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_StartTask02 */
-void StartTask02(void *argument)
+/* USER CODE END Header_autoDrivingTask */
+void autoDrivingTask(void *argument)
 {
-  /* USER CODE BEGIN StartTask02 */
+  /* USER CODE BEGIN autoDrivingTask */
   /* Infinite loop */
   for(;;)
   {
-
-	osDelay(1);
+	if(autoDrive_flag)
+	{
+		autoStart = 1;
+	}
+	if(autoStart)
+	{
+		Forward();
+	}
+    osDelay(1);
   }
-  /* USER CODE END StartTask02 */
+  /* USER CODE END autoDrivingTask */
 }
 
 /* USER CODE BEGIN Header_StartTask03 */

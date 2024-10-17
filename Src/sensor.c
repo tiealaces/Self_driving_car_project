@@ -7,10 +7,10 @@
 
 #include "sensor.h"
 
-extern uint32_t echo_left_time, echo_center_time, echo_right_time;
-extern uint32_t echo_left_rise_time, echo_left_fall_time;
-extern uint32_t echo_center_rise_time, echo_center_fall_time;
-extern uint32_t echo_right_rise_time, echo_right_fall_time;
+uint32_t echo_left_time, echo_center_time, echo_right_time;
+uint32_t echo_left_rise_time, echo_left_fall_time;
+uint32_t echo_center_rise_time, echo_center_fall_time;
+uint32_t echo_right_rise_time, echo_right_fall_time;
 //#define CH_1_TRIG_PORT 	GPIOA
 //#define CH_1_TRIG_PIN	GPIO_PIN_5
 //#define CH_2_TRIG_PORT 	GPIOC
@@ -131,11 +131,16 @@ void echo_set()
 
 void echo_get()
 {
-	if (echo_left_fall_time > echo_left_rise_time) echo_left_time = echo_left_fall_time - echo_left_rise_time;
-	if (echo_center_fall_time > echo_center_rise_time) echo_center_time = echo_center_fall_time - echo_center_rise_time;
-	if (echo_right_fall_time > echo_right_rise_time) echo_right_time = echo_right_fall_time - echo_right_rise_time;
+	if (echo_left_fall_time > echo_left_rise_time){
+		echo_left_time = echo_left_fall_time - echo_left_rise_time;
+	}
+	if (echo_center_fall_time > echo_center_rise_time) {
+		echo_center_time = echo_center_fall_time - echo_center_rise_time;
+	}
+	if (echo_right_fall_time > echo_right_rise_time){
+		echo_right_time = echo_right_fall_time - echo_right_rise_time;
+	}
 
-	HAL_Delay(100);
 }
 
 void trigger_set()

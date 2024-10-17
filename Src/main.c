@@ -14,7 +14,30 @@
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
+  * Pinout
+  *
+  *				C10		C11										C9		C8
+  *				C12		D2										B8		C6
+  *				VDD		E5V		BAT_POWER						B9		C5
+  *				BOOT0	GND		BAT_GND							AVDD	U5V
+  *				NC		NC										GND		NC
+  *				NC		IOREF									A5		A12
+  *				A13		RESET					ECHO_LEFT		A6		A11
+  *				A14		3V3										A7		B12
+  *	USART1 TX	A15		5V		BT_POWER		ECHO_RIGHT		B6		NC
+  *				GND		GND		BT_GND							C7		GND
+  *				B7		GND						TRIG_CENTER		A9		B2
+  *				C13		VIN						TRIG_LEFT		A8		B1		IN1
+  *				C14		NC										B10		B15		IN2
+  *				C15		A0		MOTOR_PWM						B4		B14		IN3
+  *				H0		A1										B5		B13		IN4
+  *				H1		A4						USART1 RX		B3		AGND
+  *				VBAT	B0		ECHO_CENTER		TRIG_RIGHT		A10		C4
+  *				C2		C1										A2		NC
+  *				C3		C0										A3		NC
+  ******************************************************************************
   */
+
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -48,10 +71,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint32_t echo_left_time, echo_center_time, echo_right_time;
-uint32_t echo_left_rise_time, echo_left_fall_time;
-uint32_t echo_center_rise_time, echo_center_fall_time;
-uint32_t echo_right_rise_time, echo_right_fall_time;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -113,7 +133,6 @@ int main(void)
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_USART1_UART_Init();
-  MX_TIM10_Init();
   MX_TIM2_Init();
   MX_TIM11_Init();
   MX_TIM3_Init();
@@ -122,7 +141,7 @@ int main(void)
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
   HAL_UARTEx_ReceiveToIdle_IT(&huart1, str_peri, sizeof(str_peri));
-  HAL_TIM_PWM_Start(&htim10, TIM_CHANNEL_1);	// bluetooth
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);	// pwm
 
   echo_set();
   trigger_set();

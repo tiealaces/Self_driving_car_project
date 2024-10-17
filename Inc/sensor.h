@@ -16,7 +16,7 @@
 //void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim);
 //void HCSR04_read();
 //void HCSR04_set();
-
+void echo_set();
 void echo_get();
 void trigger_set();
 
