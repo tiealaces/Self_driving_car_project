@@ -25,13 +25,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-uint8_t autoStart;
+#include "bluetooth.h"
+#include "sensor.h"
 
-//extern uint32_t echo_left_time, echo_center_time, echo_right_time;
-//extern uint32_t echo_left_rise_time, echo_left_fall_time;
-//extern uint32_t echo_center_rise_time, echo_center_fall_time;
-//extern uint32_t echo_right_rise_time, echo_right_fall_time;
-extern uint8_t autoDrive_flag;
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -166,11 +162,19 @@ void autoDrivingTask(void *argument)
   {
 	if(autoDrive_flag)
 	{
-		autoStart = 1;
-	}
-	if(autoStart)
-	{
 		Forward();
+		if(echo_center_time < 35)
+		{
+			STOP();
+		}
+		if(echo_left_time < 35)
+		{
+			Left();
+		}
+		if(echo_left_time < 35)
+		{
+			Right();
+		}
 	}
     osDelay(1);
   }

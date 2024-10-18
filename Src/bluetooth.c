@@ -8,9 +8,9 @@
 
 #include "bluetooth.h"
 
-int speed = 600;
+uint16_t speed = 600;
 uint8_t str_peri[1];
-uint8_t autoDrive_flag;
+uint8_t autoDrive_flag=0;
 static uint16_t speedIndex = 0;
 static uint16_t speedState[] = {600, 800, 1000};
 
@@ -18,11 +18,11 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t rxBufferSize
 {
 	if (huart == &huart1)	// else if
 	{
-		if (rxBufferSize)
-		{
-			str_peri[rxBufferSize] = 0;	// trans string
-		}
-		HAL_UARTEx_ReceiveToIdle_IT(&huart1, str_peri, sizeof(str_peri));
+//		if (rxBufferSize)
+//		{
+//			str_peri[rxBufferSize] = 0;	// trans string
+//		}
+//		HAL_UARTEx_ReceiveToIdle_IT(&huart1, str_peri, sizeof(str_peri));
 
 
 		if(str_peri[0] == 'F')
@@ -49,6 +49,7 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t rxBufferSize
 		else if(str_peri[0] == 'P')
 		{
 			STOP();
+			autoDrive_flag = 0;
 		}
 		else if(str_peri[0] == 'A')
 		{
@@ -66,4 +67,5 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t rxBufferSize
 
 	}
 
+	HAL_UARTEx_ReceiveToIdle_IT(&huart1, str_peri, sizeof(str_peri));
 }

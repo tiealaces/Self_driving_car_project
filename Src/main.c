@@ -27,8 +27,8 @@
   *	USART1 TX	A15		5V		BT_POWER		ECHO_RIGHT		B6		NC
   *				GND		GND		BT_GND							C7		GND
   *				B7		GND						TRIG_CENTER		A9		B2
-  *				C13		VIN						TRIG_LEFT		A8		B1		IN1
-  *				C14		NC										B10		B15		IN2
+  *				C13		VIN						TRIG_LEFT		A8		B1		IN2
+  *				C14		NC										B10		B15		IN1
   *				C15		A0		MOTOR_PWM						B4		B14		IN3
   *				H0		A1										B5		B13		IN4
   *				H1		A4						USART1 RX		B3		AGND

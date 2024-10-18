@@ -10,7 +10,11 @@
 
 #include "main.h"
 
+extern uint16_t speed;
+extern uint8_t str_peri[1];
+extern uint8_t autoDrive_flag;
 
-void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t rxBufferSize);
+
+//void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t rxBufferSize);
 
 #endif /* INC_BLUETOOTH_H_ */
