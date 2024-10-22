@@ -17,9 +17,6 @@ extern uint32_t echo_left_rise_time, echo_left_fall_time;
 extern uint32_t echo_center_rise_time, echo_center_fall_time;
 extern uint32_t echo_right_rise_time, echo_right_fall_time;
 
-//void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim);
-//void HCSR04_read();
-//void HCSR04_set();
 void echo_set();
 void echo_get();
 void trigger_set();

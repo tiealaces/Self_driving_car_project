@@ -162,18 +162,39 @@ void autoDrivingTask(void *argument)
   {
 	if(autoDrive_flag)
 	{
-		Forward();
-		if(echo_center_time < 35)
+		if(echo_center_time >= 210)
+		{
+			Forward();
+			if((echo_left_time < 60) || (echo_right_time < 60))
+			{
+				if(echo_left_time < echo_right_time)
+				{
+					Left_slow();
+				}
+				else if(echo_right_time < echo_left_time)
+				{
+					Right_slow();
+				}
+			}
+		}
+		else if(echo_center_time < 210)
 		{
 			STOP();
-		}
-		if(echo_left_time < 35)
-		{
-			Left();
-		}
-		if(echo_left_time < 35)
-		{
-			Right();
+			while(1)
+			{
+				if(echo_left_time < echo_right_time)
+				{
+					Left();
+				}
+				if(echo_right_time < echo_left_time)
+				{
+					Right();
+				}
+				if(echo_center_time >= 210)
+				{
+					break;
+				}
+			}
 		}
 	}
     osDelay(1);

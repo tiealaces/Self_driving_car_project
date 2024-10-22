@@ -12,7 +12,6 @@ uint32_t echo_left_rise_time, echo_left_fall_time;
 uint32_t echo_center_rise_time, echo_center_fall_time;
 uint32_t echo_right_rise_time, echo_right_fall_time;
 
-
 void echo_set()
 {
 	HAL_TIM_IC_Start_DMA(&htim3, TIM_CHANNEL_1, &echo_left_rise_time, 1);
