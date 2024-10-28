@@ -145,6 +145,9 @@ int main(void)
 
   echo_set();
   trigger_set();
+//  KalmanFilter_Init(&kf_center, 1.0f, 5.0f);
+//  KalmanFilter_Init(&kf_left, 1.0f, 5.0f);
+//  KalmanFilter_Init(&kf_right, 1.0f, 5.0f);
   /* USER CODE END 2 */
 
   /* Init scheduler */

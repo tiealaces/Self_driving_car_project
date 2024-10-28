@@ -29,7 +29,6 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t rxBufferSize
 		{
 			__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, speed);
 			Forward();
-
 		}
 		else if(str_peri[0] == 'L')
 		{

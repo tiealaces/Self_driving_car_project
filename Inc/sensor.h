@@ -16,6 +16,7 @@ extern uint32_t echo_left_time, echo_center_time, echo_right_time;
 extern uint32_t echo_left_rise_time, echo_left_fall_time;
 extern uint32_t echo_center_rise_time, echo_center_fall_time;
 extern uint32_t echo_right_rise_time, echo_right_fall_time;
+extern uint32_t right_value, left_value;
 
 void echo_set();
 void echo_get();

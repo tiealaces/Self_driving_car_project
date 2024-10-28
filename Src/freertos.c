@@ -27,7 +27,13 @@
 /* USER CODE BEGIN Includes */
 #include "bluetooth.h"
 #include "sensor.h"
+#include "kalman_filter.h"
 
+//float filtered_center;
+//float filtered_left;
+//float filtered_right;
+//
+//KalmanFilter kf_center, kf_left, kf_right;
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -141,6 +147,7 @@ void echoreadTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
+
 	echo_get();
     osDelay(10);
   }
@@ -157,12 +164,13 @@ void echoreadTask(void *argument)
 void autoDrivingTask(void *argument)
 {
   /* USER CODE BEGIN autoDrivingTask */
+
   /* Infinite loop */
   for(;;)
   {
 	if(autoDrive_flag)
 	{
-		if(echo_center_time >= 210)
+		if(echo_center_time >= 200)
 		{
 			Forward();
 			if((echo_left_time < 60) || (echo_right_time < 60))
@@ -177,7 +185,7 @@ void autoDrivingTask(void *argument)
 				}
 			}
 		}
-		else if(echo_center_time < 210)
+		else if(echo_center_time < 200)
 		{
 			STOP();
 			while(1)
@@ -190,7 +198,7 @@ void autoDrivingTask(void *argument)
 				{
 					Right();
 				}
-				if(echo_center_time >= 210)
+				if(echo_center_time >= 200)
 				{
 					break;
 				}
@@ -215,7 +223,9 @@ void StartTask03(void *argument)
   /* Infinite loop */
   for(;;)
   {
-
+//	filtered_center = KalmanFilter_Update(&kf_center, echo_center_time);
+//	filtered_left = KalmanFilter_Update(&kf_left, echo_left_time);
+//	filtered_right = KalmanFilter_Update(&kf_right, echo_right_time);
 	osDelay(1);
   }
   /* USER CODE END StartTask03 */

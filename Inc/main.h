@@ -38,12 +38,16 @@ extern "C" {
 #include "motor.h"
 #include "sensor.h"
 #include "bluetooth.h"
+#include "kalman_filter.h"
 
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
 extern uint8_t str_peri[1];
+extern KalmanFilter kf_center;
+extern KalmanFilter kf_left;
+extern KalmanFilter kf_right;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
